@@ -26,6 +26,10 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+# YAML 파일 제외
+*.yml
+*.yaml
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
