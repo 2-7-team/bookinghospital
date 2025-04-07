@@ -2,6 +2,7 @@ package com._7.bookinghospital.user_service.infrastructure.jwt;
 
 import com._7.bookinghospital.user_service.application.dto.resquest.SignInRequest;
 import com._7.bookinghospital.user_service.domain.model.UserRole;
+import com._7.bookinghospital.user_service.domain.security.TokenProvider;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -13,7 +14,7 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Component
-public class JwtTokenProvider {
+public class JwtTokenProvider implements TokenProvider {
 
     @Value("${spring.application.name}")
     private String issuer;
@@ -27,7 +28,7 @@ public class JwtTokenProvider {
         this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secretkey));
     }
 
-
+    @Override
     public String generateToken(String username, UserRole role){
         return Jwts.builder()
                 .subject(username)

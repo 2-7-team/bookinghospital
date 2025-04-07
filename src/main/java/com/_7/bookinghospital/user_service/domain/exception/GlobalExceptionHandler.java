@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<CommonResponse> handleIllegalArgumentException(IllegalArgumentException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(CommonResponse.fail(e.getMessage()));
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<CommonResponse> handleValidationExceptions(MethodArgumentNotValidException e) {
+    public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException e) {
         StringBuilder errorMessage = new StringBuilder();
 
         e.getBindingResult().getAllErrors().forEach((error) -> {
@@ -26,11 +26,11 @@ public class GlobalExceptionHandler {
             errorMessage.append(fieldName).append(":").append(message).append("\n");
         });
 
-        CommonResponse errorResponse = CommonResponse.builder()
+/*        CommonResponse errorResponse = CommonResponse.builder()
                 .message(errorMessage.toString())
                 .data(null)
-                .build();
+                .build();*/
 
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage.toString());
     }
 }
