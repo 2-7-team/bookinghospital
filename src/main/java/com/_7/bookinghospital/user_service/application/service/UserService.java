@@ -26,7 +26,14 @@ public class UserService {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
 
         String encodedPassword = passwordEncoder.encode(signupRequest.getPassword());
-        User user = User.createUser(signupRequest, encodedPassword);
+        User user = User.createUserBuilder()
+                .username(signupRequest.getUsername())
+                .nickName(signupRequest.getNickName())
+                .email(signupRequest.getEmail())
+                .role(signupRequest.getUserRole())
+                .password(encodedPassword)
+                .build();
+
         userRepository.save(user);
 
     }
@@ -45,3 +52,5 @@ public class UserService {
 
 
 }
+
+

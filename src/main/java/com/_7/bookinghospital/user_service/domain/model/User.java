@@ -3,7 +3,10 @@ package com._7.bookinghospital.user_service.domain.model;
 // application과 domain이 다른계층인데 application이 domain에 영향을 줄 수 있음 분리해야함.
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
@@ -12,19 +15,24 @@ import lombok.*;
 // 클래스 레벨에 @NoArgsConstructor, @AllArgsConstructor, @Builder, @Setter가 왜 붙으면 안되는가?
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "p_user")
-@Setter
 public class User extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name="username")
+
+    // 컬럼에 작성될 값의 조건을 명시적으로 작성해주기
+    @Column(unique = true, nullable = false)
     private String userName;
+
     @Column
     private String password;
-    @Column(name = "nickname")
+
     private String nickName;
+
     @Column
     private String email;
+
     @Column
     private UserRole role;
 
@@ -36,4 +44,5 @@ public class User extends BaseEntity {
         this.email = getEmail();
         this.role = role;
     }
+
 }
