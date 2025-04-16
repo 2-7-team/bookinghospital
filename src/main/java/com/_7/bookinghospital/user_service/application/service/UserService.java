@@ -47,7 +47,7 @@ public class UserService {
         }
 
         // 토큰 생성후 반환
-        return tokenProvider.generateToken(user.getUserName(), user.getRole());
+        return tokenProvider.generateToken(user.getId().toString(), user.getRole());
     }
 
 

@@ -29,9 +29,9 @@ public class JwtTokenProvider implements TokenProvider {
     }
 
     @Override
-    public String generateToken(String username, UserRole role){
+    public String generateToken(String userId, UserRole role){
         return Jwts.builder()
-                .subject(username)
+                .subject(userId)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .issuer(issuer)
                 .claim("role",role)
