@@ -1,10 +1,8 @@
 package com._7.bookinghospital.user_service.infrastructure.jwt;
 
-import com._7.bookinghospital.user_service.application.dto.resquest.SignInRequest;
 import com._7.bookinghospital.user_service.domain.model.UserRole;
 import com._7.bookinghospital.user_service.domain.security.TokenProvider;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,7 +32,7 @@ public class JwtTokenProvider implements TokenProvider {
                 .subject(userId)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .issuer(issuer)
-                .claim("role",role)
+                .claim("role",role.name())
                 .expiration(new Date(System.currentTimeMillis() + accessExpiration))
                 .signWith(secretKey, Jwts.SIG.HS512)
                 .compact();
